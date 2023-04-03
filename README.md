@@ -1,10 +1,24 @@
 # tn-front
 
-## Tested on
+### Tested on
 Ubuntu 20.04.5 LTS
 Node: v14.21.3
 
-## Project setup
+### Considerations.
+If you are planning to deploy to AWS. You will be required to Install AWS CLI, Configure credentials and optionally set up profiles.
+Please follow AWS guide to install and set up your AWS CLI
+* [Getting started and Install AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
+* [Configuring AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+    *  [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+* [Authentication and access credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-authentication.html)
+
+
+For deployment you will see that an OPTONAL VAR (AWS_FRONTEND_PROFILE) is referenced. This variable will add to all commands executed by the deployment script the option "--profile". You can avoid the use of the var AWS_FRONTEND_PROFILE by settign up the environment variable AWS_PROFILE in your SO. However some times after set AWS_PROFILE in your SO you could face unexpected behaviour and enforce the profile using the option --profile is a good workaround.
+
+To undestard what does --profile or AWS_PROFILE please read:
+[Using named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-using-profiles)
+
+### Project setup
 Before running a local server or deploying to AWS please install dependecies by running
 ```
 npm install
@@ -19,7 +33,7 @@ S3_HOST_BUCKET_NAME=tn-front // AWS S3 bucket NAME to host the app as static. Yo
 DOMAIN_NAME=tn-front.app.com // Doimain Name of the app
 CERTIFICATE_ARN=arn:aws:acm:us-east-1:999:certificate/xxxx //AWS Certificate Managers ARN for DNS described in DOMAIN_NAME
 ```
-### Compiles and hot-reloads for development
+### Run a local server
 ```
 npm run serve
 ```
@@ -49,7 +63,7 @@ S3_HOST_BUCKET_NAME=front-bucket
 DOMAIN_NAME=tn-front.app.com
 CERTIFICATE_ARN=arn:aws:acm:us-east-1:999:certificate/xxxx
 ```
-* run deply command
+* run deploy command
 ```
 npm run deploy
 ```
