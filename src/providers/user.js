@@ -15,26 +15,19 @@ const getUserFromLocalStorage = () => {
   return token && user ? { user: JSON.parse(user), token } : undefined;
 }
 
-export const userService = (authenticate, notify, redirect) => {
+export const userService = (authenticate, redirect) => {
 
   const signIn = (username, password) => authenticate(username, password)
     .then((response) => {
       const { user, jwt } = response.data.data;
       setUserInLocalStorage(user, jwt);
-      notify("success", "Signed in successfully");
       redirect({ name: "operation-home" });
       return true;
     })
-    .catch((err) => {
-      const errorMessage =
-        err?.response?.data?.error?.detail || "Couldn't sign in";
-      notify("error", errorMessage);
-      return false;
-    })
+    .catch((error) => Promise.reject(error?.detail || "Couldn't sign in"))
 
-  const signOut = async (type = "success", message = "See you later") => {
+  const signOut = async () => {
     removeUserFromLocalStorage();
-    notify(type, message);
     redirect({ name: "outside-login" });
     return true;
   }

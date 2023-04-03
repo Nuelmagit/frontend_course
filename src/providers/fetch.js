@@ -2,8 +2,20 @@ import axios from "axios";
 
 const baseUrl = process.env.VUE_APP_API_URL;
 
+const formatResponse = response => response.data.data
+
+const handleError = async (userUservice, error) => {
+  if (error === "Unauthorized" || error?.response?.status === 401) {
+    await userUservice.signOut();
+    return Promise.reject({ error: "Unauthorized", detail: "Unauthorized" });
+  } else {
+    return Promise.reject({ error: "Unexpected Error", detail: error?.response?.data?.error || "Unexpected Error" });
+  }
+}
+
 export const authenticate = (username, password) =>
-  axios.post(`${baseUrl}/operations/user/login`, { username, password })
+  axios.post(`${baseUrl}/operations/user/login`, { username, password }).catch(error => Promise.reject(error.response.data.error))
+
 
 /**
  * TO DO. Improve duplicated code. or use interceptors to add token.
@@ -23,12 +35,8 @@ export const fetchOperationRecords = userUservice => (page, searchValue, sortFie
         })
       : Promise.reject("Unauthorized")
   )
-    .then(response => response.data.data)
-    .catch(error => {
-      if (error === "Unauthorized" || error?.response?.status === 401) {
-        return userUservice.signOut("error", "Unauthorized")
-      }
-    })
+    .then(formatResponse)
+    .catch(error => handleError(userUservice, error))
 }
 
 export const deleteOperationRecord = userUservice => id => {
@@ -40,12 +48,8 @@ export const deleteOperationRecord = userUservice => id => {
         })
       : Promise.reject("Unauthorized")
   )
-    .then(response => response.data.data)
-    .catch(error => {
-      if (error === "Unauthorized" || error?.response?.status === 401) {
-        return userUservice.signOut("error", "Unauthorized")
-      }
-    })
+    .then(formatResponse)
+    .catch(error => handleError(userUservice, error))
 }
 
 export const runOperation = userUservice => (data) => {
@@ -57,10 +61,6 @@ export const runOperation = userUservice => (data) => {
         { headers: { Authorization: `Bearer ${token}` } })
       : Promise.reject("Unauthorized")
   )
-    .then(response => response.data.data)
-    .catch(error => {
-      if (error === "Unauthorized" || error?.response?.status === 401) {
-        return userUservice.signOut("error", "Unauthorized")
-      }
-    })
+    .then(formatResponse)
+    .catch(error => handleError(userUservice, error))
 }

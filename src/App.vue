@@ -16,17 +16,14 @@ export default {
   name: "App",
   components: {},
   provide() {
-    const showNotification = toast.bind(this);
-    const userServiceInstance = userService(
-      authenticate,
-      showNotification,
-      (route) => this.$router.push(route)
+    const userServiceInstance = userService(authenticate, (route) =>
+      this.$router.push(route)
     );
 
     return {
       userConfirmation: userConfirmation.bind(this),
       userAlert: userAlert.bind(this),
-      showNotification: showNotification,
+      showNotification: toast.bind(this),
       userService: userServiceInstance,
       fetchOperationRecords: fetchOperationRecords(userServiceInstance),
       deleteOperationRecord: deleteOperationRecord(userServiceInstance),

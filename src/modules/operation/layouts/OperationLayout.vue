@@ -13,13 +13,15 @@
 <script>
 import Navbar from "@/modules/shared/components/Navbar.vue";
 export default {
-  inject: ["userService"],
+  inject: ["userService", "showNotification"],
   components: {
     Navbar,
   },
   methods: {
     signOut() {
-      return this.userService.signOut();
+      return this.userService.signOut().then(() => {
+        this.showNotification("success", "See you later");
+      });
     },
   },
 };

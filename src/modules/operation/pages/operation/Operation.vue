@@ -20,14 +20,18 @@ export default {
     onFormSubmitted(data) {
       if (this.submitting) return;
       this.submitting = true;
-      return this.runOperation(data).then(({ operationResult }) => {
-        this.submitting = false;
-        this.userAlert(
-          `Operation executed successfully.`,
-          `The result is: ${operationResult}. To see full logs pelase go to records.`,
-          "success"
-        );
-      });
+      return this.runOperation(data)
+        .then(({ operationResult }) => {
+          this.userAlert(
+            `Operation executed successfully.`,
+            `The result is: ${operationResult}. To see full logs pelase go to records.`,
+            "success"
+          );
+        })
+        .catch((error) => {
+          this.userAlert(`Could not execute operation.`, error.detail, "error");
+        })
+        .finally(() => (this.submitting = false));
     },
   },
 };

@@ -2,7 +2,7 @@
   <div class="card login-container">
     <div class="card-body">
       <h5 class="card-title">Sign in</h5>
-      <LoginForm @formSubmitted="onFormSubmitted" />
+      <LoginForm :loading="submitting" @formSubmitted="onFormSubmitted" />
     </div>
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script>
 import LoginForm from "./LoginForm.vue";
 export default {
-  inject: ["userService"],
+  inject: ["userService", "showNotification"],
   components: {
     LoginForm,
   },
@@ -26,6 +26,12 @@ export default {
       this.submitting = true;
       return this.userService
         .signIn(email, password)
+        .then(() => {
+          this.showNotification("success", "Signed in successfully");
+        })
+        .catch((error) => {
+          this.showNotification("error", error);
+        })
         .finally(() => (this.submitting = false));
     },
   },

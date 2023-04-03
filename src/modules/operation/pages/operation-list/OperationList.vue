@@ -61,17 +61,23 @@ export default {
           this.totalPages = totalPages;
           this.rows = rows;
         })
+        .catch((error) => {
+          this.showNotification("error", error.detail);
+        })
         .finally(() => (this.loading = false));
     },
     deleteItem(id) {
       if (this.loading) return;
       this.loading = true;
       return this.deleteOperationRecord(id)
-        .then(() => (this.loading = false))
         .then(() => {
           this.showNotification("success", "Record deleted successfully");
           this.refreshTable();
-        });
+        })
+        .catch((error) => {
+          this.showNotification("error", error.detail);
+        })
+        .finally(() => (this.loading = false));
     },
     confirmDelete({ action, id }) {
       if (this.loading) return;
