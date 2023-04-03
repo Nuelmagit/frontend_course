@@ -19,7 +19,7 @@ To undestard what does --profile or AWS_PROFILE please read:
 [Using named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-using-profiles)
 
 ### Project setup
-Before running a local server or deploying to AWS please install dependecies by running
+Before running a the app locally or deploying to AWS please install dependecies by running
 ```
 npm install
 ```
@@ -69,9 +69,9 @@ npm run deploy
 ```
 ### After Deployment
 * You have to configure the DNS declared in DOMAIN_NAME to point to the Domain name of the CloudFront distribution created in the previous step. You could find it in AWS Console -> CloudFront -> Distributions it looks like xxxxxxx.cloudfront.net
-* Remember to add to Server's CORS config your DOMAIN_NAME and/or Domain name of the CloudFront.
+* Remember to add to API's CORS config your DOMAIN_NAME and/or Domain name of the CloudFront.
 ```
-//Server's Folder -> src -> operations.openapi.yaml
+//API's Folder -> src -> operations.openapi.yaml
 x-amazon-apigateway-cors:
   allowOrigins:
   - https://tn-front.app.com
