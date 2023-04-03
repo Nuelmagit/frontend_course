@@ -1,17 +1,39 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <router-view></router-view>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { userConfirmation, toast, userAlert } from "./providers/sweet-alert";
+import { userService } from "./providers/user";
+import {
+  authenticate,
+  fetchOperationRecords,
+  deleteOperationRecord,
+  runOperation,
+} from "@/providers/fetch";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  components: {},
+  provide() {
+    const showNotification = toast.bind(this);
+    const userServiceInstance = userService(
+      authenticate,
+      showNotification,
+      (route) => this.$router.push(route)
+    );
+
+    return {
+      userConfirmation: userConfirmation.bind(this),
+      userAlert: userAlert.bind(this),
+      showNotification: showNotification,
+      userService: userServiceInstance,
+      fetchOperationRecords: fetchOperationRecords(userServiceInstance),
+      deleteOperationRecord: deleteOperationRecord(userServiceInstance),
+      runOperation: runOperation(userServiceInstance),
+    };
+  },
+};
 </script>
 
 <style>
@@ -21,6 +43,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
