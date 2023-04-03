@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = process.env.VUE_APP_API_URL;
+const baseOperationsUrl = process.env.VUE_APP_OPERATIONS_API_URL;
 
 const formatResponse = response => response.data.data
 
@@ -9,12 +9,15 @@ const handleError = async (userUservice, error) => {
     await userUservice.signOut();
     return Promise.reject({ error: "Unauthorized", detail: "Unauthorized" });
   } else {
-    return Promise.reject({ error: "Unexpected Error", detail: error?.response?.data?.error || "Unexpected Error" });
+    return Promise.reject({
+      error: error?.response?.data?.error?.title || "Unexpected Error",
+      detail: error?.response?.data?.error?.detail || "Unexpected Error"
+    });
   }
 }
 
 export const authenticate = (username, password) =>
-  axios.post(`${baseUrl}/operations/user/login`, { username, password }).catch(error => Promise.reject(error.response.data.error))
+  axios.post(`${baseOperationsUrl}/user/login`, { username, password }).catch(error => Promise.reject(error.response.data.error))
 
 
 /**
@@ -23,7 +26,7 @@ export const authenticate = (username, password) =>
 export const fetchOperationRecords = userUservice => (page, searchValue, sortField, sortCriteria) => {
   return userUservice.getToken().then(token =>
     token
-      ? axios.get(`${baseUrl}/operations/records`,
+      ? axios.get(`${baseOperationsUrl}/records`,
         {
           params: {
             page,
@@ -42,7 +45,7 @@ export const fetchOperationRecords = userUservice => (page, searchValue, sortFie
 export const deleteOperationRecord = userUservice => id => {
   return userUservice.getToken().then(token =>
     token
-      ? axios.delete(`${baseUrl}/operations/records/${id}`,
+      ? axios.delete(`${baseOperationsUrl}/records/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` }
         })
@@ -56,7 +59,7 @@ export const runOperation = userUservice => (data) => {
   return userUservice.getToken().then(token =>
     token
       ? axios.post(
-        `${baseUrl}/operations/operate`,
+        `${baseOperationsUrl}/operate`,
         data,
         { headers: { Authorization: `Bearer ${token}` } })
       : Promise.reject("Unauthorized")

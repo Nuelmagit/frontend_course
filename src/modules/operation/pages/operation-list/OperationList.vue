@@ -71,13 +71,14 @@ export default {
       this.loading = true;
       return this.deleteOperationRecord(id)
         .then(() => {
+          this.loading = false;
           this.showNotification("success", "Record deleted successfully");
           this.refreshTable();
         })
         .catch((error) => {
+          this.loading = false;
           this.showNotification("error", error.detail);
-        })
-        .finally(() => (this.loading = false));
+        });
     },
     confirmDelete({ action, id }) {
       if (this.loading) return;

@@ -26,7 +26,7 @@ npm install
 Create a .env file based on .env.sample file.
 ```
 //.env file
-VUE_APP_API_URL=https://tn-apis.app.com/v1 // REQUIRED FOR RUNNING IN LOCAL OR TO DEPLOY TO AWS
+VUE_APP_OPERATIONS_API_URL=https://tn-apis.app.com/v1/operations // REQUIRED FOR RUNNING IN LOCAL OR TO DEPLOY TO AWS
 // REQUIRED JUT FOR AWS DEPLOY. Leve them blank if you are not deploying to AWS 
 AWS_FRONTEND_PROFILE=tnprofile //Optional. Configured AWS CLI Profile to deploy app. Leave it black if you dont want to specify a profile and use the default aws cli config.
 S3_HOST_BUCKET_NAME=tn-front // AWS S3 bucket NAME to host the app as static. You dont need to create it manually
@@ -57,7 +57,7 @@ npm run test:unit
 * Your .env file will looks like
 ```
 //.env 
-VUE_APP_API_URL=https://tn-apis.app.com/v1
+VUE_APP_OPERATIONS_API_URL=https://tn-apis.app.com/v1/operations
 AWS_FRONTEND_PROFILE=tnprofile // Add this just if you have set up a profile
 S3_HOST_BUCKET_NAME=front-bucket
 DOMAIN_NAME=tn-front.app.com
