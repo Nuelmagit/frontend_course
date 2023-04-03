@@ -40,7 +40,19 @@ npm run test:unit
 * set the S3_HOST_BUCKET_NAME in the .env file. (this bucket will be created automatically with the deploy command. You have just to declare a name)
 * Create a DNS with the DNS provider of your preference and set it in DOMAIN_NAME in the .env file
 * Add/Create to AWS Certificate manager (AWS Console -> AWS Certificate Manager -> Certificates) a certificate that contains the host declared in DOMAIN_NAME and set its ARN as CERTIFICATE_ARN in the .env file
-
+* Your .env file will looks like
+```
+//.env 
+VUE_APP_API_URL=https://tn-apis.app.com/v1
+AWS_FRONTEND_PROFILE=tnprofile // Add this just if you have set up a profile
+S3_HOST_BUCKET_NAME=front-bucket
+DOMAIN_NAME=tn-front.app.com
+CERTIFICATE_ARN=arn:aws:acm:us-east-1:999:certificate/xxxx
+```
+* run deply command
+```
+npm run deploy
+```
 ### After Deployment
 * You have to configure the DNS declared in DOMAIN_NAME to point to the Domain name of the CloudFront distribution created in the previous step. You could find it in AWS Console -> CloudFront -> Distributions it looks like xxxxxxx.cloudfront.net
 * Remember to add to Server's CORS config your DOMAIN_NAME and/or Domain name of the CloudFront.
