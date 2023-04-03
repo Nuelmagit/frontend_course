@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "predeploy": "npm run build",
+    "predeploy": "npm run test:unit && npm run build",
     "deploy": "bash scripts/cf-deploy.sh",
     "test:unit": "vue-cli-service test:unit"
   },
