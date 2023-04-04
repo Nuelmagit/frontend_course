@@ -26,7 +26,7 @@
     </div>
     <OperationListTable
       :items="rows"
-      @actionTriggered="confirmDelete"
+      @delete="confirmDelete"
       @sorted="onSorted"
       :loading="loading"
     />
@@ -106,7 +106,7 @@ export default {
           this.showNotification("error", error.detail);
         });
     },
-    confirmDelete({ action, id }) {
+    confirmDelete(id) {
       if (this.loading) return;
       return this.userConfirmation({
         title: "Do you want to delete this record?",

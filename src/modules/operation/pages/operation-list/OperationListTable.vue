@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     onClick(id) {
-      this.$emit("actionTriggered", { action: "delete", id });
+      this.$emit("delete", id);
     },
     sort(id) {
       this.sortField = id;

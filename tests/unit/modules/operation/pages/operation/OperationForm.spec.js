@@ -2,7 +2,7 @@ import { shallowMount } from "@vue/test-utils";
 import OperationForm from "@/modules/operation/pages/operation/OperationForm.vue";
 
 describe("OperationForm Component", () => {
-  let wrapper, signInError, userServiceSpy;
+  let wrapper
 
   beforeEach(() => {
     wrapper = shallowMount(OperationForm, {
@@ -10,7 +10,6 @@ describe("OperationForm Component", () => {
     });
 
     jest.clearAllMocks();
-    signInError = false;
   })
 
   test("Should call the formSubmit function when the submit button is clicked", async () => {
