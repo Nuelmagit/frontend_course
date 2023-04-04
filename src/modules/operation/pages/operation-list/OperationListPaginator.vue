@@ -40,7 +40,7 @@ export default {
   props: {
     totalPages: {
       type: Number,
-      default: 20,
+      default: 1,
     },
     initialCurrentPage: {
       type: Number,

@@ -11,6 +11,11 @@ const routes = [
     component: () => import("../modules/operation/layouts/OperationLayout"),
     children: [
       {
+        path: '',
+        redirect: { name: "operation-home" },
+        name: "operation-home-fallback"
+      },
+      {
         path: 'home',
         name: 'operation-home',
         beforeEnter: [isAuthenticatedGuard],
@@ -31,7 +36,8 @@ const routes = [
     children: [
       {
         path: '',
-        redirect: { name: "outside-login" }
+        redirect: { name: "outside-login" },
+        name: "outside-login-fallback"
       },
       {
         path: 'login',

@@ -34,5 +34,22 @@ describe("OperationForm Component", () => {
     expect(emittedData.values[0]).toBe(firstValue);
     expect(emittedData.values[1]).toBe(secondValue);
   });
+  
+  test("Should trigger the form clear function when the clear button is clicked", async () => {
+    wrapper.vm.clear = jest.fn();
 
+    await wrapper.findAll('button')[1].trigger('click');
+
+    expect(wrapper.vm.clear).toHaveBeenCalled();
+  });
+
+  test("Should clear the form when the clear function is invoked", async () => {
+    wrapper.setData({ firstValue: 56, secondValue: 5 });
+
+    await wrapper.vm.clear();
+
+    expect(wrapper.vm.firstValue).toBeUndefined();
+    expect(wrapper.vm.secondValue).toBeUndefined();
+  });
+  
 })
