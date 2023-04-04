@@ -54,6 +54,7 @@ npm run test:unit
 * set the S3_HOST_BUCKET_NAME in the .env file. (this bucket will be created automatically with the deploy command. You have just to declare a name)
 * Create a DNS with the DNS provider of your preference and set it in DOMAIN_NAME in the .env file
 * Add/Create to AWS Certificate manager (AWS Console -> AWS Certificate Manager -> Certificates) a certificate that contains the host declared in DOMAIN_NAME and set its ARN as CERTIFICATE_ARN in the .env file
+* Optional. you can set the var STACK_NAME to overwrite the AWS stack name. By default it is tn-front-app
 * Your .env file will looks like
 ```
 //.env 
