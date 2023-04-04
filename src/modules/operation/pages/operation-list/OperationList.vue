@@ -1,6 +1,29 @@
 <template>
   <div class="operation-list-container">
-    <OperationListSearch @valueChanged="onSearch" :blockOperations="loading" />
+    <div class="row mb-3">
+      <div class="col-10">
+        <OperationListSearch
+          @valueChanged="onSearch"
+          :blockOperations="loading"
+        />
+      </div>
+      <div class="col-2 per-page-container">
+        <select
+          @change="onPerPageChanged"
+          class="form-select per-page-selector"
+          v-model="perPage"
+          :disabled="loading"
+        >
+          <option
+            v-for="option in perPageOptions"
+            :key="option"
+            :value="option"
+          >
+            {{ option }}
+          </option>
+        </select>
+      </div>
+    </div>
     <OperationListTable
       :items="rows"
       @actionTriggered="confirmDelete"
@@ -41,6 +64,8 @@ export default {
       rows: [],
       loading: false,
       searchValue: "",
+      perPageOptions: [5, 10, 50, 100],
+      perPage: 5,
     };
   },
   created() {
@@ -54,7 +79,8 @@ export default {
         this.currentPage,
         this.searchValue,
         this.sortField,
-        this.sortCriteria
+        this.sortCriteria,
+        this.perPage
       )
         .then(({ totalPages, currentPage, rows }) => {
           this.currentPage = currentPage;
@@ -102,6 +128,9 @@ export default {
       this.sortCriteria = sortCriteria;
       this.refreshTable();
     },
+    onPerPageChanged() {
+      this.refreshTable();
+    },
   },
 };
 </script>
@@ -112,5 +141,14 @@ export default {
   width: 100%;
   padding: 15px;
   margin: auto;
+}
+
+.per-page-container {
+  display: flex;
+  justify-content: end;
+}
+
+.per-page-selector {
+  max-width: 83px;
 }
 </style>

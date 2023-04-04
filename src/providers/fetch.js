@@ -23,7 +23,7 @@ export const authenticate = (username, password) =>
 /**
  * TO DO. Improve duplicated code. or use interceptors to add token.
  */
-export const fetchOperationRecords = userUservice => (page, searchValue, sortField, sortCriteria) => {
+export const fetchOperationRecords = userUservice => (page, searchValue, sortField, sortCriteria, limit) => {
   return userUservice.getToken().then(token =>
     token
       ? axios.get(`${baseOperationsUrl}/records`,
@@ -32,6 +32,7 @@ export const fetchOperationRecords = userUservice => (page, searchValue, sortFie
             page,
             sortField,
             sortCriteria,
+            limit,
             ...(searchValue ? { search: searchValue } : {})
           },
           headers: { Authorization: `Bearer ${token}` }

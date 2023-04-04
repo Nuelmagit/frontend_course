@@ -104,16 +104,23 @@ describe("OperationList Component", () => {
     expect(userConfirmation).toHaveBeenCalled();
   });
 
+  test("Should sort data when sorting changes", async () => {
+    const sortField = "date";
+    const sortCriteria = "asc"
+
+    await wrapper.vm.onSorted({ sortField, sortCriteria });
+
+    expect(fetchOperationRecords.mock.calls[0][2]).toBe(sortField);
+    expect(fetchOperationRecords.mock.calls[0][3]).toBe(sortCriteria);
+  });
+
+  test("Should change per page limit", async () => {
+    const perPageOption = wrapper.vm.perPageOptions.length - 1;
+
+    const input = wrapper.find("select");
+    await input.setValue(wrapper.vm.perPageOptions[perPageOption]);
+
+    expect(fetchOperationRecords.mock.calls[0][4]).toBe(wrapper.vm.perPageOptions[perPageOption]);
+  });
+
 })
-
-
-//
-//
-//confirmDelete
-//
-//
-
-//
-// 
-
-
